@@ -118,6 +118,7 @@ public class GameBoardManager : MonoBehaviour
             }
         }
 
+        //display the score above the board
         if (turnScore > 0)
         {
             GameObject scoreText = Instantiate(scoreTextPrefab, panel);
@@ -127,11 +128,16 @@ public class GameBoardManager : MonoBehaviour
             scoreBoard.AddScore(currentPlayer, turnScore);
         }
 
+        //advance the player
         currentPlayer++;
         if (currentPlayer > numPlayers)
             currentPlayer = 1;
 
+        //advance the turn counter
         currentTurn++;
+        //check if the game is over
+        if(currentTurn > totalTurns)
+            scoreBoard.EndGame();
     }
 
     public void DrawSquare(params (int,int)[] points)

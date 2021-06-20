@@ -11,6 +11,8 @@ public class ScoreBoardManager : MonoBehaviour
     public Button[] playerIcons;
     public int[] playerScores;
     public TMP_Text[] playerScoreLabels;
+    public GameObject[] playerLocations;
+    public GameObject playerIndicator;
     public TMP_Text endGameLabel;
     public ColorManager colorManager;
 
@@ -38,6 +40,8 @@ public class ScoreBoardManager : MonoBehaviour
             playerScoreLabels[i].fontStyle = FontStyles.Normal;
             playerScoreLabels[i].color = Color.white;
         }
+
+        playerIndicator.transform.position = playerLocations[0].transform.position;
     }
 
     public void Update()
@@ -49,6 +53,11 @@ public class ScoreBoardManager : MonoBehaviour
     public void AddScore(int player, int score)
     {
         playerScores[player - 1] += score;
+    }
+
+    public void ChangePlayer(int player)
+    {
+        playerIndicator.transform.position = playerLocations[player-1].transform.position;
     }
 
     public void EndGame()

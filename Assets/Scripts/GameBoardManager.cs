@@ -132,6 +132,7 @@ public class GameBoardManager : MonoBehaviour
         currentPlayer++;
         if (currentPlayer > numPlayers)
             currentPlayer = 1;
+        scoreBoard.ChangePlayer(currentPlayer);
 
         //advance the turn counter
         currentTurn++;

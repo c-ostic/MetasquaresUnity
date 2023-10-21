@@ -1,44 +1,69 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a single dot on the game board
+/// Holds current player and logical position data
+/// </summary>
 public class GameDot : MonoBehaviour
 {
-    public (int,int) point;
-    public int player; //0 for no player, 1+ for player
-    public Button parentButton;
+    public Vector2Int Coordinate { get; private set; }
+    public int Player { get; private set; } //0 for no player, 1+ for player
 
-    private GameBoardManager board;
+    private Button dotButton;
     private ColorManager colorManager;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Called when this object is created
+    /// Gets the button attached to this object
+    /// </summary>
+    private void Awake()
+    {
+        dotButton = GetComponent<Button>();
+    }
+
+    /// <summary>
+    /// Called before the frame update
+    /// Finds the color manager
+    /// Sets the default color
+    /// </summary>
     private void Start()
     {
-        board = FindObjectOfType<GameBoardManager>();
         colorManager = FindObjectOfType<ColorManager>();
-        parentButton.image.sprite = colorManager.playerSprites[0];
-        parentButton.image.color = colorManager.playerColors[0];
-        player = 0;
+        dotButton.image.sprite = colorManager.playerSprites[0];
+        dotButton.image.color = colorManager.playerColors[0];
+        Player = 0;
     }
 
-    public void SetCoords((int,int) newPoint)
+    /// <summary>
+    /// Sets the coordinates of this point
+    /// </summary>
+    /// <param name="newPoint">The coordinates to set to</param>
+    public void SetCoords(Vector2Int newPoint)
     {
-        point = newPoint;
+        Coordinate = newPoint;
     }
 
+    /// <summary>
+    /// Sets the player data and color
+    /// </summary>
+    /// <param name="playerNum">The player to change to</param>
     public void SetPlayer(int playerNum)
     {
-        player = playerNum;
-        parentButton.image.sprite = colorManager.playerSprites[playerNum];
+        Player = playerNum;
+        dotButton.image.sprite = colorManager.playerSprites[playerNum];
     }
 
-    //this method is what is called when the button is pressed
+    /// <summary>
+    /// Called when this object is pressed
+    /// </summary>
     public void ClickDot()
     {
-        board.ChooseDot(point);
-        
         //once the dot is chosen, make it non-interactable
-        parentButton.interactable = false;
+        dotButton.interactable = false;
+
+        //find the game board and pass its location
+        GameBoardManager gameBoardManager = FindObjectOfType<GameBoardManager>();
+        gameBoardManager.ChooseDot(Coordinate);
     }
 }

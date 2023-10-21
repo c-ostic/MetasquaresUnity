@@ -4,6 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Used for temporary score indicators to show up above the board
+/// After appearing, they slowly fade away
+/// </summary>
 public class ScoreText : MonoBehaviour
 {
     public Image panel;
@@ -12,7 +16,10 @@ public class ScoreText : MonoBehaviour
     public float waitTime;
     public float timeSoFar;
 
-    // Update is called once per frame
+    /// <summary>
+    /// Called every frame
+    /// Makes the text slowly disappear until destroyed completely
+    /// </summary>
     void Update()
     {
         timeSoFar += Time.deltaTime;
